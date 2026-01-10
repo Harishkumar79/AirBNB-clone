@@ -1,0 +1,22 @@
+<% layout("/layouts/boilerplate") -%>
+
+    <body>
+        <h1 class="fw-bold fs-1 fs-md-2 fs-sm-3">Best places to stay. Choose those you like :&rpar;</h1>
+        <div class="row">
+            <% for (const post of allPost) {%>
+                <div class="card column" style="width: 20rem;">
+                    <a class="fw-semibold" href="listing/<%= post._id  %>">
+                        <img src="<%= post.image.url %>" class="card-img-top" style="height: 18rem;" alt="...">
+                        <div class="card-img-overlay"></div>
+                        <div class="card-body">
+                            <p class="card-text">
+                                <%= post.title %>
+                                    <br />
+                                    &#8377;<%= post.price.toLocaleString("en-IN") %>/Night
+                            </p>
+                        </div>
+                    </a>
+                </div>
+                <% } %>
+        </div>
+    </body>

@@ -1,0 +1,80 @@
+<% layout("/layouts/boilerplate") -%>
+
+    <body>
+        <h1 class="text-center">Enter Details to Update post</h1>
+        <form method="post" action="/listing/<%= post._id %>?_method=PUT"
+            style="display: flex; flex-direction: column;" class="needs-validation" novalidate>
+            <div class="row">
+                <div class="col-8 offset-2">
+                    <div class="mb-3">
+                        <label name="title" class="form-label">Title :</label>
+                        <input class="form-control" name="postInfo[title]" value="<%= post.title  %>"
+                            placeholder="Enter your title" type="text" required />
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                        <div class="invalid-feedback">
+                            Please enter your title!
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label name="description" class="form-label">Description :</label>
+                        <textarea class="form-control" name="postInfo[description]" placeholder="Enter description"
+                            type="text" required><%= post.description  %></textarea>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                        <div class="invalid-feedback">
+                            Please enter your description!
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label name="img" class="form-label">Image :</label>
+                        <input class="form-control" name="postInfo[img]" value="<%= post.image.url  %>"
+                            placeholder="Enter Image Url" type="text" />
+                    </div>
+
+                    <div class="row">
+                        <div class="mb-3 col-md-4">
+                            <label name="price" class="form-label">Price :</label>
+                            <input class="form-control" name="postInfo[price]" value="<%= post.price  %>"
+                                placeholder="Enter Price" type="number" required />
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                            <div class="invalid-feedback">
+                                Please enter your price!
+                            </div>
+                        </div>
+
+                        <div class="mb-3 col-md-8">
+                            <label name="location" class="form-label">Location :</label>
+                            <input name="postInfo[location]" class="form-control" value="<%= post.location  %>"
+                                placeholder="Enter Location" type="text" required />
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                            <div class="invalid-feedback">
+                                Please enter your location!
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label name="country" class="form-label">Country :</label>
+                        <input name="postInfo[country]" class="form-control" value="<%= post.country  %>"
+                            placeholder="Enter Country" type="text" required />
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                        <div class="invalid-feedback">
+                            Please enter your country!
+                        </div>
+                    </div>
+                    <button class=" btn btn-success mb-3 col-12 ">Update Post</button>
+                </div>
+            </div>
+        </form>
+    </body>

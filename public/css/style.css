@@ -1,0 +1,64 @@
+body {
+    background-color: rgb(69, 240, 255);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.container {
+    flex: 1;
+}
+
+.navbar {
+    background-color: white;
+
+    a {
+        color: black;
+    }
+}
+
+.hero-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.350),
+            rgba(0, 0, 0, 0.350)), url('/src/home.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 500px;
+}
+
+.card {
+    border: none !important;
+    margin: 20px 0px !important;
+
+    a {
+        text-decoration: none;
+        color: black;
+    }
+}
+
+.card-img-top {
+    border-radius: 1rem !important;
+}
+
+.card-img-overlay {
+    opacity: 0;
+}
+
+.card-img-overlay:hover {
+    opacity: 0.2;
+    background-color: white;
+}
+
+footer {
+    background-color: rgb(17, 229, 236);
+}
+
+.footer-icon {
+    list-style: none;
+    color: black;
+    font-size: 1.5rem;
+}
