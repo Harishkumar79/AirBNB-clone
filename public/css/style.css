@@ -53,6 +53,13 @@ body {
     background-color: white;
 }
 
+.img-fit {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
 footer {
     background-color: rgb(17, 229, 236);
 }

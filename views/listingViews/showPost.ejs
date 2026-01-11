@@ -2,7 +2,29 @@
 
     <body>
         <div class="card" style="width: 100%;">
-            <img src="<%= post.image.url %>" class="card-img-top" style="height: 40dvh; width: 50dvw;" alt="image">
+            <div>
+                <div class="row gx-2" style="height: 48vh;">
+
+                    <div class="col-md-8 h-100">
+                        <img src="<%= post.image.url %>" class="img-fit" alt="image">
+                    </div>
+
+                    <div class="col-md-4 h-100">
+                        <div class="row h-100 pb-2">
+
+                            <div class="col-12 h-50 mb-2 ">
+                                <img src="<%= post.image.url %>" class="img-fit" alt="image">
+                            </div>
+
+                            <div class="col-12 h-50">
+                                <img src="<%= post.image.url %>" class="img-fit" alt="image">
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
             <div class="card-body">
                 <div class="mb-3">
                     <div class=" fs-3 fw-bold">
@@ -21,10 +43,10 @@
                     </div>
                 </div>
                 <div class="row">
-                    <form class="col-6"  post="get" action="/listing/<%= post._id  %>/edit">
+                    <form class="col-6" post="get" action="/listing/<%= post._id  %>/edit">
                         <button class="w-100 btn btn-success mb-3 ">Edit</button>
                     </form>
-                    <form class="col-6"  method="post" action="/listing/<%= post._id%>/?_method=DELETE">
+                    <form class="col-6" method="post" action="/listing/<%= post._id%>/?_method=DELETE">
                         <button class="w-100 btn btn-success mb-3 ">Delete</button>
                     </form>
                 </div>
