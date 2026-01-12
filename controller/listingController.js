@@ -19,10 +19,7 @@ const listNewPost = (req , res) =>{
 }
 
 const listCreatePost = wrapAsync(async (req, res) => {
-    console.log('req.body.postInfo', req.body);
-    if(!req.body){
-        throw new ExpressError(400 , "Send valid data for listing!");
-    }
+    console.log(req.body);
     let newListing = new Listing(req.body.postInfo);
     await newListing.save();
     res.redirect("/listing");
@@ -35,9 +32,6 @@ const listEdit = wrapAsync(async (req,res) =>{
 })
 
 const listUpdatePost = wrapAsync(async (req ,res) => {
-    if(!req.body){
-        throw new ExpressError(400 , "Send valid data to update!");
-    }
     let {id} = req.params;
     await Listing.findByIdAndUpdate(id, {...req.body.postInfo});
     res.redirect(`/listing/${id}`);
