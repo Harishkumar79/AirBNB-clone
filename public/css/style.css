@@ -30,7 +30,7 @@ body {
     min-height: 500px;
 }
 
-.card {
+.listing-card {
     border: none !important;
     margin: 20px 0px !important;
 

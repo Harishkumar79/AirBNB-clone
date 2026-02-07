@@ -13,6 +13,7 @@ router.get("/listing/new", listController.listNewPost);// create form
 router.get("/listing/:id", listController.listPost); // show post by id
 
 router.post("/listing", validate.postInfoValidator , listController.listCreatePost);  // create post
+router.post("/listing/:id/review" , validate.postReviewValidator ,  listController.postReview );
 router.get("/listing/:id/edit",listController.listEdit); // edit form
 router.put("/listing/:id" , validate.postInfoValidator , listController.listUpdatePost) // update post
 router.delete("/listing/:id", listController.listDelete); // delete post

@@ -1,7 +1,7 @@
 const express = require("express");
 const Listing = require("../model/listing");
+const Review = require("../model/Review");
 const wrapAsync = require("../utils/wrapAsync.js");
-const ExpressError = require("../utils/expressError.js");
 
 const listAllPost = wrapAsync(async (req,res) =>{
     const allPost = await Listing.find({});
@@ -10,7 +10,7 @@ const listAllPost = wrapAsync(async (req,res) =>{
 
 const listPost = wrapAsync(async (req,res) =>{
     let {id} = req.params;
-    let post = await Listing.findById(id);
+    let post = await Listing.findById(id).populate("reviews");
     res.render("listingViews/showPost.ejs",{post});
 })
 
@@ -24,6 +24,21 @@ const listCreatePost = wrapAsync(async (req, res) => {
     await newListing.save();
     res.redirect("/listing");
 });
+
+//review
+const postReview = wrapAsync(async(req,res) => {
+    let listing = await Listing.findById(req.params.id);
+    let review = new Review(req.body.review);
+
+    listing.reviews.push(review);
+
+    await review.save();
+    await listing.save();
+
+    console.log("review added");
+
+    res.redirect(`/listing/${listing._id}`);
+})
 
 const listEdit = wrapAsync(async (req,res) =>{
     const {id} = req.params;
@@ -44,5 +59,5 @@ const listDelete = wrapAsync(async (req , res) => {
 })
 
 
-module.exports = {listAllPost , listPost , listNewPost , listCreatePost , listEdit , listUpdatePost, listDelete};
+module.exports = {listAllPost , listPost , listNewPost , listCreatePost  , postReview , listEdit , listUpdatePost, listDelete};
 
