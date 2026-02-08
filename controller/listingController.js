@@ -25,7 +25,7 @@ const listCreatePost = wrapAsync(async (req, res) => {
     res.redirect("/listing");
 });
 
-//review
+// add review
 const postReview = wrapAsync(async(req,res) => {
     let listing = await Listing.findById(req.params.id);
     let review = new Review(req.body.review);
@@ -39,6 +39,20 @@ const postReview = wrapAsync(async(req,res) => {
 
     res.redirect(`/listing/${listing._id}`);
 })
+
+
+// delete review
+
+const postReviewDelete = wrapAsync( async(req,res)=>{
+    let {id , reviewId} = req.params;
+
+    await Listing.findByIdAndUpdate(id , { $pull : {reviews : reviewId}});
+
+    await Review.findByIdAndDelete(reviewId);
+
+    res.redirect(`/listing/${id}`);
+})
+
 
 const listEdit = wrapAsync(async (req,res) =>{
     const {id} = req.params;
@@ -59,5 +73,5 @@ const listDelete = wrapAsync(async (req , res) => {
 })
 
 
-module.exports = {listAllPost , listPost , listNewPost , listCreatePost  , postReview , listEdit , listUpdatePost, listDelete};
+module.exports = {listAllPost , listPost , listNewPost , listCreatePost  , postReview , listEdit , listUpdatePost, postReviewDelete , listDelete};
 

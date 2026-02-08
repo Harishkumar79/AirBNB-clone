@@ -84,6 +84,9 @@
                                         <%= review.rating %><b><i> star</i></b>
                                     </div>
                                 </div>
+                                <form class="mb-3 ms-auto" method="post" action="/listing/<%= post._id%>/review/<%= review._id %>?_method=DELETE">
+                                    <button class="btn btn-sm btn-success">Delete</button>
+                                </form>
                             </div>
                             <% } %>
                     </div>
