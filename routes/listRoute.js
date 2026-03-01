@@ -1,12 +1,21 @@
 const express = require("express");
 const listController = require("../controller/listingController");
+const userController = require("../controller/userController");
 const validate = require("../middleware/validationMiddleware");
+const passport = require("passport");
 
 const router = express.Router();
 
 router.get("/" , (req,res)=>{
     res.render("listingViews/home.ejs");
 })
+
+router.get("/signup" , userController.signUpFormController);
+router.post("/signup" , userController.signUpController);
+
+router.get("/login" , userController.logInFormController);
+router.post("/login" , passport.authenticate('local', { failureRedirect: '/login' , failureFlash : true }) , userController.logInController);
+
 
 router.get("/listing", listController.listAllPost); // show all post
 router.get("/listing/new", listController.listNewPost);// create form
