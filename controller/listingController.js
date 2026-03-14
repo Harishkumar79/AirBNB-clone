@@ -10,7 +10,7 @@ const listAllPost = wrapAsync(async (req,res) =>{
 
 const listPost = wrapAsync(async (req,res) =>{
     let {id} = req.params;
-    let post = await Listing.findById(id).populate("reviews");
+    let post = await Listing.findById(id).populate("reviews").populate("owner");
     if(!post){
         req.flash("error" , "Listing that your are trying to access doesn't exits or deleted!");
         return res.redirect("/listing");
@@ -25,6 +25,7 @@ const listNewPost = (req , res) =>{
 const listCreatePost = wrapAsync(async (req, res) => {
     // console.log(req.body);
     let newListing = new Listing(req.body.postInfo);
+    newListing.owner = req.user._id;
     await newListing.save();
     req.flash("success" , "New listing Add Successfully!");
     res.redirect("/listing");
