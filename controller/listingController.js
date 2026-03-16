@@ -3,22 +3,22 @@ const Listing = require("../model/listing");
 const Review = require("../model/Review");
 const wrapAsync = require("../utils/wrapAsync.js");
 
-const listAllPost = wrapAsync(async (req,res) =>{
+const listAllPost = wrapAsync(async (req, res) => {
     const allPost = await Listing.find({});
-    res.render("listingViews/listing.ejs" , {allPost});
+    res.render("listingViews/listing.ejs", { allPost });
 })
 
-const listPost = wrapAsync(async (req,res) =>{
-    let {id} = req.params;
-    let post = await Listing.findById(id).populate("reviews").populate("owner");
-    if(!post){
-        req.flash("error" , "Listing that your are trying to access doesn't exits or deleted!");
+const listPost = wrapAsync(async (req, res) => {
+    let { id } = req.params;
+    let post = await Listing.findById(id).populate({ path: "reviews", populate: { path: "author" } }).populate("owner");
+    if (!post) {
+        req.flash("error", "Listing that your are trying to access doesn't exits or deleted!");
         return res.redirect("/listing");
     }
-    res.render("listingViews/showPost.ejs",{post});
+    res.render("listingViews/showPost.ejs", { post });
 })
 
-const listNewPost = (req , res) =>{
+const listNewPost = (req, res) => {
     res.render("listingViews/createPost.ejs");
 }
 
@@ -27,62 +27,62 @@ const listCreatePost = wrapAsync(async (req, res) => {
     let newListing = new Listing(req.body.postInfo);
     newListing.owner = req.user._id;
     await newListing.save();
-    req.flash("success" , "New listing Add Successfully!");
+    req.flash("success", "New listing Add Successfully!");
     res.redirect("/listing");
 });
 
 // add review
-const postReview = wrapAsync(async(req,res) => {
+const postReview = wrapAsync(async (req, res) => {
     let listing = await Listing.findById(req.params.id);
     let review = new Review(req.body.review);
-
+    review.author = req.user._id;
     listing.reviews.push(review);
 
     await review.save();
     await listing.save();
 
     // console.log("review added");
-    req.flash("success" , "Review Added Successfully!");
+    req.flash("success", "Review Added Successfully!");
     res.redirect(`/listing/${listing._id}`);
 })
 
 
 // delete review
 
-const postReviewDelete = wrapAsync( async(req,res)=>{
-    let {id , reviewId} = req.params;
+const postReviewDelete = wrapAsync(async (req, res) => {
+    let { id, reviewId } = req.params;
 
-    await Listing.findByIdAndUpdate(id , { $pull : {reviews : reviewId}});
+    await Listing.findByIdAndUpdate(id, { $pull: { reviews: reviewId } });
     await Review.findByIdAndDelete(reviewId);
 
-    req.flash("success" , "Review Deleted Successfully!");
+    req.flash("success", "Review Deleted Successfully!");
     res.redirect(`/listing/${id}`);
 })
 
 
-const listEdit = wrapAsync(async (req,res) =>{
-    const {id} = req.params;
+const listEdit = wrapAsync(async (req, res) => {
+    const { id } = req.params;
     let post = await Listing.findById(id);
-    if(!post){
-        req.flash("error" , "Listing that your are trying to edit doesn't exits or deleted!");
+    if (!post) {
+        req.flash("error", "Listing that your are trying to edit doesn't exits or deleted!");
         return res.redirect("/listing");
     }
-    res.render("listingViews/editPost.ejs" , {post});
+    res.render("listingViews/editPost.ejs", { post });
 })
 
-const listUpdatePost = wrapAsync(async (req ,res) => {
-    let {id} = req.params;
-    await Listing.findByIdAndUpdate(id, {...req.body.postInfo});
-    req.flash("success" , "listing Updated Successfully!");
+const listUpdatePost = wrapAsync(async (req, res) => {
+    let { id } = req.params;
+    await Listing.findByIdAndUpdate(id, { ...req.body.postInfo });
+    req.flash("success", "listing Updated Successfully!");
     res.redirect(`/listing/${id}`);
 })
 
-const listDelete = wrapAsync(async (req , res) => {
-    let {id} = req.params;
+const listDelete = wrapAsync(async (req, res) => {
+    let { id } = req.params;
     const deletedListing = await Listing.findByIdAndDelete(id);
-    req.flash("success" , "Listing Deleted Successfully!");
+    req.flash("success", "Listing Deleted Successfully!");
     res.redirect("/listing");
 })
 
-module.exports = {listAllPost , listPost , listNewPost , listCreatePost  , postReview , listEdit , listUpdatePost, postReviewDelete , listDelete};
+module.exports = { listAllPost, listPost, listNewPost, listCreatePost, postReview, listEdit, listUpdatePost, postReviewDelete, listDelete };
 
