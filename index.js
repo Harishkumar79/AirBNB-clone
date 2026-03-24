@@ -1,7 +1,6 @@
 const express = require("express");
 const path = require("path");
 const mongodb = require("./config/db");
-const listingRoute = require("./routes/listRoute");
 const methodOverride = require('method-override');
 const ExpressError = require("./utils/expressError");
 const session = require("express-session");
@@ -9,7 +8,8 @@ const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./model/user");
-
+const listingRoute = require("./routes/listRoute");
+const userRoute = require("./routes/userRoute");
 const engine = require("ejs-mate");
 const app = express();
 
@@ -71,7 +71,13 @@ app.set("views" , path.join(__dirname , "/views"));
 //     res.send(registerUser);
 // })
 
-app.use("/" , listingRoute);
+app.get("/", (req, res) => {
+    res.render("listingViews/home.ejs");  // home route
+});
+
+app.use("/user" , userRoute);
+app.use("/listing" , listingRoute);
+
 
 app.use((req , res , next)=>{
     next(new ExpressError( 404 ,"Page not found!"));

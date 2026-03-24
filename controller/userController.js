@@ -1,4 +1,3 @@
-const express = require("express");
 const User = require("../model/user.js");
 const wrapAsync = require("../utils/wrapAsync.js");
 
@@ -21,7 +20,7 @@ const signUpController = wrapAsync(async (req, res) => {
         })
     } catch (err) {
         req.flash("error", err.message);
-        res.redirect("/signup");
+        res.redirect("/user/signup");
     }
 })
 

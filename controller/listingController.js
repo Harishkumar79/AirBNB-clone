@@ -1,6 +1,4 @@
-const express = require("express");
 const Listing = require("../model/listing");
-const Review = require("../model/Review");
 const wrapAsync = require("../utils/wrapAsync.js");
 
 const listAllPost = wrapAsync(async (req, res) => {
@@ -31,34 +29,6 @@ const listCreatePost = wrapAsync(async (req, res) => {
     res.redirect("/listing");
 });
 
-// add review
-const postReview = wrapAsync(async (req, res) => {
-    let listing = await Listing.findById(req.params.id);
-    let review = new Review(req.body.review);
-    review.author = req.user._id;
-    listing.reviews.push(review);
-
-    await review.save();
-    await listing.save();
-
-    // console.log("review added");
-    req.flash("success", "Review Added Successfully!");
-    res.redirect(`/listing/${listing._id}`);
-})
-
-
-// delete review
-
-const postReviewDelete = wrapAsync(async (req, res) => {
-    let { id, reviewId } = req.params;
-
-    await Listing.findByIdAndUpdate(id, { $pull: { reviews: reviewId } });
-    await Review.findByIdAndDelete(reviewId);
-
-    req.flash("success", "Review Deleted Successfully!");
-    res.redirect(`/listing/${id}`);
-})
-
 
 const listEdit = wrapAsync(async (req, res) => {
     const { id } = req.params;
@@ -84,5 +54,5 @@ const listDelete = wrapAsync(async (req, res) => {
     res.redirect("/listing");
 })
 
-module.exports = { listAllPost, listPost, listNewPost, listCreatePost, postReview, listEdit, listUpdatePost, postReviewDelete, listDelete };
+module.exports = { listAllPost, listPost, listNewPost, listCreatePost, listEdit, listUpdatePost, listDelete };
 
