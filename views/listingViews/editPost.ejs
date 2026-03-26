@@ -3,7 +3,7 @@
     <body>
         <h1 class="text-center">Enter Details to Update post</h1>
         <form method="post" action="/listing/<%= post._id %>?_method=PUT"
-            style="display: flex; flex-direction: column;" class="needs-validation" novalidate>
+            style="display: flex; flex-direction: column;" class="needs-validation" enctype="multipart/form-data"  novalidate>
             <div class="row">
                 <div class="col-8 offset-2">
                     <div class="mb-3">
@@ -31,9 +31,13 @@
                     </div>
 
                     <div class="mb-3">
-                        <label name="img" class="form-label">Image :</label>
-                        <input class="form-control" name="postInfo[img]" value="<%= post.image.url  %>"
-                            placeholder="Enter Image Url" type="text" />
+                        <p name="image-preview" class="form-label">Saved Image :</p>
+                        <img src="<%= originalImageUrl %>" alt="image">
+                    </div>
+
+                    <div class="mb-3">
+                        <label name="img" class="form-label">Upload New Image :</label>
+                        <input class="form-control" name="postInfo[img]" type="file" />
                     </div>
 
                     <div class="row">

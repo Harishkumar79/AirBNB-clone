@@ -3,8 +3,7 @@
     <body>
         <h1 class="text-center mt-3">Enter Details to create post</h1>
 
-        <form method="post" action="/listing" style="display: flex; flex-direction: column;" class="needs-validation"
-            novalidate>
+        <form method="post" action="/listing" style="display: flex; flex-direction: column;" class="needs-validation" enctype="multipart/form-data" novalidate>
             <div class="row">
                 <div class="col-8 offset-2">
                     <div class="mb-3">
@@ -32,8 +31,8 @@
                     </div>
 
                     <div class="mb-3">
-                        <label name="img" class="form-label">Image :</label>
-                        <input class="form-control" name="postInfo[img]" placeholder="Enter Image Url" type="text" />
+                        <label name="img" class="form-label">Upload Listing Image :</label>
+                        <input class="form-control" name="postInfo[img]" type="file" required />
                     </div>
 
                     <div class="row">

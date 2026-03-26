@@ -21,9 +21,11 @@ const listNewPost = (req, res) => {
 }
 
 const listCreatePost = wrapAsync(async (req, res) => {
-    // console.log(req.body);
+    let filename = req.file.filename;
+    let url = req.file.path;
     let newListing = new Listing(req.body.postInfo);
     newListing.owner = req.user._id;
+    newListing.image = {filename , url};
     await newListing.save();
     req.flash("success", "New listing Add Successfully!");
     res.redirect("/listing");
@@ -32,17 +34,28 @@ const listCreatePost = wrapAsync(async (req, res) => {
 
 const listEdit = wrapAsync(async (req, res) => {
     const { id } = req.params;
-    let post = await Listing.findById(id);
+    let post = await Listing.findById(id);    
     if (!post) {
         req.flash("error", "Listing that your are trying to edit doesn't exits or deleted!");
         return res.redirect("/listing");
     }
-    res.render("listingViews/editPost.ejs", { post });
+    
+    let originalImageUrl = post.image.url;
+    originalImageUrl = originalImageUrl.replace("/upload", "/upload/h_250,w_300");
+    res.render("listingViews/editPost.ejs", { post , originalImageUrl });
 })
 
 const listUpdatePost = wrapAsync(async (req, res) => {
     let { id } = req.params;
-    await Listing.findByIdAndUpdate(id, { ...req.body.postInfo });
+    let listing = await Listing.findByIdAndUpdate(id, { ...req.body.postInfo });
+
+    if( typeof req.file !== "undefined"){
+        let filename = req.file.filename;
+        let url = req.file.path;
+
+        listing.image = {filename , url};
+        await listing.save();
+    }
     req.flash("success", "listing Updated Successfully!");
     res.redirect(`/listing/${id}`);
 })
