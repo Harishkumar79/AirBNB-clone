@@ -19,22 +19,31 @@ const listingSchema = new Schema({
     location: { type: String },
     country: { type: String },
 
-    reviews : [
+    reviews: [
         {
-            type : Schema.Types.ObjectId,
-            ref : "Review"
+            type: Schema.Types.ObjectId,
+            ref: "Review"
         }
-    ] ,
+    ],
 
-    owner : {
-        type : Schema.Types.ObjectId,
-        ref : "User"
+    owner: {
+        type: Schema.Types.ObjectId,
+        ref: "User"
+    },
+
+    geolocation: {
+        type: {
+            type: String,
+            enum: ["Point"],
+            default: "Point"
+        },
+        coordinates: [Number]
     }
 })
 
-listingSchema.post("findOneAndDelete" , async(listing)=>{
-    if(listing){
-        await Review.deleteMany({_id : {$in : listing.reviews}});
+listingSchema.post("findOneAndDelete", async (listing) => {
+    if (listing) {
+        await Review.deleteMany({ _id: { $in: listing.reviews } });
     }
 })
 
