@@ -1,6 +1,98 @@
 <% layout("/layouts/boilerplate") -%>
+    <style>
+        .filters-row {
+            display: flex;
+            align-items: center;
+            align-content: center;
+            flex-wrap: wrap;
+            margin: 1rem 0rem;
+            gap: 1rem;
+        }
+
+        .filter {
+            opacity: 0.6;
+            border: 1px solid rgb(0, 0, 0);
+            border-radius: 1rem;
+            padding: 0.5rem 1.5rem 0rem;
+        }
+
+        .filter:hover {
+            opacity: 1;
+            cursor: pointer;
+        }
+
+        .filter-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .search-box{
+            margin-right: 4rem;
+        }
+    </style>
+
     <body>
-        <h1 class="fw-bold fs-1 fs-md-2 fs-sm-3">Best places to stay. Choose those you like :&rpar;</h1>
+        <!-- <h1 class="fw-bold fs-1 fs-md-2 fs-sm-3">Best places to stay. Choose those you like :&rpar;</h1> -->
+        <div class="filters-row">
+            <div class="filter">
+                <div class="filter-box">
+                    <i class="fa-solid fa-fire"></i>
+                    <p>Trending</p>
+                </div>
+            </div>
+            <div class="filter">
+                <div class="filter-box">
+                    <i class="fa-brands fa-fort-awesome"></i>
+                    <p>castle</p>
+                </div>
+            </div>
+            <div class="filter">
+                <div class="filter-box">
+                    <i class="fa-solid fa-snowflake"></i>
+                    <p>Arctic</p>
+                </div>
+            </div>
+            <div class="filter">
+                <div class="filter-box">
+                    <i class="fa-solid fa-hotel"></i>
+                    <p>Hotels</p>
+                </div>
+            </div>
+            <div class="filter">
+                <div class="filter-box">
+                    <i class="fa-solid fa-umbrella-beach"></i>
+                    <p>Beach</p>
+                </div>
+            </div>
+            <div class="filter">
+                <div class="filter-box">
+                    <i class="fa-solid fa-ship"></i>
+                    <p>Ship</p>
+                </div>
+            </div>
+            <div class="filter">
+                <div class="filter-box">
+                    <i class="fa-solid fa-igloo"></i>
+                    <p>Caves</p>
+                </div>
+            </div>
+            <div class="filter">
+                <div class="filter-box">
+                    <i class="fa-solid fa-mountain-sun"></i>
+                    <p>Mountains</p>
+                </div>
+            </div>
+
+            <div class="search-box ms-auto">
+                <form class="d-flex">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+
         <div class="row">
             <% for (const post of allPost) {%>
                 <div class="card listing-card column" style="width: 20rem;">
